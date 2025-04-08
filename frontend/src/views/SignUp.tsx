@@ -1,7 +1,7 @@
-export default function Surveys() {
+export default function SignUp() {
     return (
         <div className="">
-            Survey
+            SignUp
         </div>
     )
 }
