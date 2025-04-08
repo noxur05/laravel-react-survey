@@ -1,12 +1,12 @@
 import {lazy} from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import Surveys from "./views/Surveys";
-import SignUp from "./views/SignUp";
-import Dashboard from "./views/Dashboard";
 import GuestLayout from "./components/GuestLayout";
 import DefaultLayout from "./components/DefaultLayout";
 
-const Login = lazy(() => import("./views/Login"))
+const Surveys = lazy(() => import("./views/Surveys"));
+const SignUp = lazy(() => import("./views/SignUp"));
+const Dashboard = lazy(() => import("./views/Dashboard"));
+const Login = lazy(() => import("./views/Login"));
 
 const router = createBrowserRouter([
     {
