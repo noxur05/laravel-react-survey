@@ -4,17 +4,24 @@ import Surveys from "./views/Surveys";
 import SignUp from "./views/SignUp";
 import Dashboard from "./views/Dashboard";
 import GuestLayout from "./components/GuestLayout";
+import DefaultLayout from "./components/DefaultLayout";
 
 const Login = lazy(() => import("./views/Login"))
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Dashboard/>
-    },
-    {
-        path: '/surveys',
-        element: <Surveys/>
+        element: <DefaultLayout/>,
+        children: [
+            {
+                path: '/',
+                element: <Dashboard/>
+            },
+            {
+                path: '/surveys',
+                element: <Surveys/>
+            },
+        ]
     },
     {
         path: '/',
