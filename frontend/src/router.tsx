@@ -1,5 +1,5 @@
 import {lazy} from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Surveys from "./views/Surveys";
 import SignUp from "./views/SignUp";
 import Dashboard from "./views/Dashboard";
@@ -13,6 +13,10 @@ const router = createBrowserRouter([
         path: '/',
         element: <DefaultLayout/>,
         children: [
+            {
+                path: '/dashboard',
+                element: <Navigate to='/'/>
+            },
             {
                 path: '/',
                 element: <Dashboard/>
