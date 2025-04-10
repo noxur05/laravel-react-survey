@@ -1,6 +1,6 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Navigate, NavLink, Outlet } from 'react-router-dom'
 import { useStateContext } from '../contexts/ContextProvider'
 
 const navigation = [
@@ -15,12 +15,17 @@ function classNames(...classes: Array<string>) {
 }
 
 export default function DefaultLayout() {
+  const {currentUser, userToken} = useStateContext();
+
+  if (!userToken) {
+    return <Navigate to="/login" />
+  }
+
   const logout = (e: React.MouseEvent) => {
     e.preventDefault()
     console.log('Logout')
   }
 
-  const {currentUser} = useStateContext();
   return (
     <>
       <div className="min-h-full">
