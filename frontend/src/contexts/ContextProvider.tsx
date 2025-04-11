@@ -1,41 +1,7 @@
 import React, { createContext, useState, useContext } from 'react';
+import { IUser } from '../modals/user.modal';
+import { Survey } from '../modals/survey.modal';
 
-interface IUser {
-  id?: number;
-  name?: string;
-  email?: string;
-  image?: string;
-}
-
-interface Option {
-  uuid: string;
-  text: string;
-}
-
-interface QuestionData {
-  options?: Option[];
-}
-
-interface Question {
-  id: number;
-  type: string;
-  question: string;
-  description: string | null;
-  data?: QuestionData | undefined[];
-}
-
-interface Survey {
-  id: number;
-  image_url: string;
-  title: string;
-  slug: string;
-  status: boolean;
-  description: string;
-  created_at: string;
-  updated_at: string;
-  expire_date: string;
-  questions?: Question[];
-}
 
 interface StateContextType {
   currentUser: IUser;
