@@ -28,7 +28,7 @@ interface ContextProviderProps {
 const tmpSurveys = [
   {
     "id": 1,
-    "image_url": "https:\/\/api.yoursurveys.xyz\/images\/vJutXzn02CDwdOyh.png",
+    "image_url": "https://i.imgur.com/QkIa5tT.jpeg",
     "title": "TheCodeholic YouTube channel",
     "slug": "thecodeholic-youtube-channel",
     "status": true,

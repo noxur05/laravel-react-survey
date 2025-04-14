@@ -50,7 +50,14 @@ const TButton: React.FC<TButtonProps> = ({
                     'text-red-500',
                     'focus:border-red-500'
                 ]
-                break;
+                break;    
+            case 'green':
+                classes = [
+                    ...classes,
+                    'text-green-500',
+                    'focus:border-green-500'
+                ]
+                break;        
         }
     } else {
         classes = [
@@ -75,6 +82,14 @@ const TButton: React.FC<TButtonProps> = ({
                     'bg-red-600',
                     'hover:bg-red-700',
                     'focus:ring-red-500'
+                ]
+                break;
+            case 'green':
+                classes = [
+                    ...classes,
+                    'bg-green-600',
+                    'hover:bg-green-700',
+                    'focus:ring-green-500'
                 ]
                 break;
         }
