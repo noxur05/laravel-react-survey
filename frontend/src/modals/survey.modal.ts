@@ -27,3 +27,9 @@ export interface Survey {
   expire_date: string;
   questions?: Question[];
 }
+
+export interface SurveyListItemProps {
+    survey: Survey;
+    key: number | string;
+    onDeleteClick: () => void;
+}
