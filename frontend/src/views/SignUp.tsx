@@ -1,7 +1,32 @@
 import { LockClosedIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router-dom";
+import {useState} from "react";
+import axiosClient from "../axios.ts";
 
 export default function SignUp() {
+    const [fullName, setFullName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [error, setError] = useState({__html: ''})
+
+    const onSubmit = (e: any) => {
+        e.preventDefault()
+        setError({__html: ''})
+
+        axiosClient.post('/signup', {
+            name: fullName,
+            email: email,
+            password: password,
+            password_confirmation: confirmPassword
+        })
+            .then(({data}) => {
+                console.log(data)
+            })
+            .catch(({response}) => {
+              console.log(response)
+            })
+    }
     return (
         <>
         <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
@@ -12,16 +37,16 @@ export default function SignUp() {
           <Link to='/login' className="font-medium text-indigo-600 hover:text-indigo-500">Login with your account</Link>
         </p>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form action="#" method="POST" className="space-y-6" onSubmit={(e) => onSubmit(e)}>
             <div>
               <div className="">
                 <input
                   id="full-name"
                   placeholder="Full Name"
                   name="name"
-                  type="email"
+                  type="text"
                   required
-                  autoComplete="email"
+                  onChange={(e) => setFullName(e.target.value)} 
                   className="block w-full rounded-t-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
