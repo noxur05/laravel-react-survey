@@ -11,11 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function signup(SignupRequest $request) {
-        $data = $request->validated([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required|min:8'
-        ]);
+        $data = $request->validated();
 
         $user = User::create([
             'name' => $data['name'],
@@ -28,7 +24,7 @@ class AuthController extends Controller
         return response([
             'user' => $user,
             'token' => $token
-        ]);
+        ], 201);
     }
 
     public function login(LoginRequest $request) {

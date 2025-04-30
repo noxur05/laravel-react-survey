@@ -6,7 +6,7 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    const token = '1234'; //TODO
+    const token = ''; //TODO
     
     config.headers = config.headers || {};
     

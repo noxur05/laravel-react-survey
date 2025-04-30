@@ -20,12 +20,15 @@ export default function SignUp() {
             password: password,
             password_confirmation: confirmPassword
         })
-            .then(({data}) => {
-                console.log(data)
-            })
-            .catch(({response}) => {
-              console.log(response)
-            })
+          .then(({data}) => {
+              console.log("Data is: ", data)
+          })
+          .catch(({error}) => {
+            if (error.response) {
+              console.error(error.response.data);
+            }
+            console.log(error);
+          })
     }
     return (
         <>
@@ -57,6 +60,7 @@ export default function SignUp() {
                   placeholder="Email"
                   type="email"
                   required
+                  onChange={(e) => setEmail(e.target.value)} 
                   className="block w-full bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -67,7 +71,7 @@ export default function SignUp() {
                   placeholder="Password"
                   type="password"
                   required
-                  autoComplete="current-password"
+                  onChange={(e) => setPassword(e.target.value)} 
                   className="block w-full bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -78,6 +82,7 @@ export default function SignUp() {
                   placeholder="Password Confirmation"
                   type="password"
                   required
+                  onChange={(e) => setConfirmPassword(e.target.value)} 
                   className="block w-full rounded-b-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
