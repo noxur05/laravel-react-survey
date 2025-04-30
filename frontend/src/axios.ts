@@ -10,7 +10,6 @@ axiosClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     
     config.headers = config.headers || {};
     
-    // Set the Authorization header
     config.headers.Authorization = `Bearer ${token}`;
     
     return config;
@@ -21,9 +20,9 @@ axiosClient.interceptors.response.use(response => {
 }, (error: AxiosError) => {
     if (error.response?.status === 401) {
         router.navigate('/login');
-        return Promise.reject(error);
+        return error;
     }
-    return Promise.reject(error);
+    throw error;
 });
 
 export default axiosClient;

@@ -11,7 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function signup(SignupRequest $request) {
-        $data = $request->validated();
+        $data = $request->validated([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:8'
+        ]);
 
         $user = User::create([
             'name' => $data['name'],
@@ -49,9 +53,9 @@ class AuthController extends Controller
 
     public function logout(Request $request) {
         $user = Auth::user();
-        
+        $user = $request->user();
         $user->currentAccessToken()->delete();
-
+        
         return response([
             'success' => true
         ]);
