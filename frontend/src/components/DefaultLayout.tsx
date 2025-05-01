@@ -25,7 +25,7 @@ export default function DefaultLayout() {
   const logout = (e: React.MouseEvent) => {
     e.preventDefault()
     axiosClient.post('/logout')
-    .then(res => {
+    .then(function() {
       setCurrentUser({})
       setUserToken(null)
     })
