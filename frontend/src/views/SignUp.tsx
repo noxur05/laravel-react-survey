@@ -2,6 +2,7 @@ import { LockClosedIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router-dom";
 import {useState} from "react";
 import axiosClient from "../axios.ts";
+import axios from "axios";
 
 export default function SignUp() {
     const [fullName, setFullName] = useState('')
@@ -10,25 +11,41 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState({__html: ''})
 
-    const onSubmit = (e: any) => {
-        e.preventDefault()
-        setError({__html: ''})
+    const onSubmit = (e) => {
+      e.preventDefault()
+      setError({__html: ''})
 
-        axiosClient.post('/signup', {
-            name: fullName,
-            email: email,
-            password: password,
-            password_confirmation: confirmPassword
-        })
-          .then(({data}) => {
-              console.log("Data is: ", data)
-          })
-          .catch(({error}) => {
+      axiosClient.post('/signup', {
+          name: fullName,
+          email: email,
+          password: password,
+          password_confirmation: confirmPassword
+      }).then(({data}) => {
+        console.log("Data is: ", data)
+      }).catch((error) => {
+          if (axios.isAxiosError(error)) {
             if (error.response) {
-              console.error(error.response.data);
+                if (error.response.data?.errors) {
+                    const finalErrors = Object.values(error.response.data.errors as Record<string, string[]>)
+                        .reduce<string[]>((accum, next) => [
+                            ...accum,
+                            ...next
+                        ], []);
+                    console.log(finalErrors);
+                    setError({ __html: finalErrors.join('<br>') });
+                } else {
+                    setError({ __html: error.response.data?.errors });
+                }
+            } else if (error.request) {
+                setError({ __html: 'No response from server' });
+            } else {
+                setError({ __html: error.message });
             }
-            console.log(error);
-          })
+        } else {
+            setError({ __html: 'Manty is delicious meal' });
+        }
+        console.log("Errors: ", error);
+      })
     }
     return (
         <>
@@ -40,6 +57,8 @@ export default function SignUp() {
           <Link to='/login' className="font-medium text-indigo-600 hover:text-indigo-500">Login with your account</Link>
         </p>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        {error.__html && (<div className="bg-red-500 rounded py-2 px-3 text-white my-3" dangerouslySetInnerHTML={error}>
+          </div>)}
           <form action="#" method="POST" className="space-y-6" onSubmit={(e) => onSubmit(e)}>
             <div>
               <div className="">
