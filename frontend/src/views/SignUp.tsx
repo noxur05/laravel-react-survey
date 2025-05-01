@@ -3,15 +3,17 @@ import { Link } from "react-router-dom";
 import {useState} from "react";
 import axiosClient from "../axios.ts";
 import axios from "axios";
+import { useStateContext } from "../contexts/ContextProvider.tsx";
 
 export default function SignUp() {
+    const { setCurrentUser, setUserToken } = useStateContext();
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState({__html: ''})
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: any) => {
       e.preventDefault()
       setError({__html: ''})
 
@@ -21,6 +23,8 @@ export default function SignUp() {
           password: password,
           password_confirmation: confirmPassword
       }).then(({data}) => {
+        setCurrentUser(data.user);
+        setUserToken(data.token);
         console.log("Data is: ", data)
       }).catch((error) => {
           if (axios.isAxiosError(error)) {
@@ -68,6 +72,7 @@ export default function SignUp() {
                   name="name"
                   type="text"
                   required
+                  value={fullName}
                   onChange={(e) => setFullName(e.target.value)} 
                   className="block w-full rounded-t-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
@@ -79,6 +84,7 @@ export default function SignUp() {
                   placeholder="Email"
                   type="email"
                   required
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)} 
                   className="block w-full bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
@@ -90,6 +96,7 @@ export default function SignUp() {
                   placeholder="Password"
                   type="password"
                   required
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)} 
                   className="block w-full bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
@@ -101,6 +108,7 @@ export default function SignUp() {
                   placeholder="Password Confirmation"
                   type="password"
                   required
+                  value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)} 
                   className="block w-full rounded-b-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
