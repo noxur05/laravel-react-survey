@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PageComponent from '../components/PageComponent';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import TButton from '../components/core/TButton';
+import axiosClient from '../axios';
 
 const SurveyView: React.FC = () => {
 
@@ -17,8 +18,15 @@ const SurveyView: React.FC = () => {
 
     })
 
-    const onSubmit = () => {
-
+    const onSubmit = (e: any) => {
+        e.preventDefault()
+        axiosClient.post('/survey', {
+            title: 'LoremIpsum',
+            description: 'Lorem Ipsum',
+            // expire_date: '11/11/2028',
+            status: true,
+            questions: [],
+        })
     }
 
     const onImageChoose = () => {
