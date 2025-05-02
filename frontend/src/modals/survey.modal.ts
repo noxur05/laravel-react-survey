@@ -16,15 +16,15 @@ export interface Question {
 }
 
 export interface Survey {
-  id?: number; // Make optional with ?
-  image: string | File | null; // Accept both types
+  id?: number;
+  image: string | File | null;
   image_url?: string;
   title: string;
   slug: string;
   status: boolean;
   description: string;
-  created_at?: string; // Make optional
-  updated_at?: string; // Make optional
+  created_at?: string;
+  updated_at?: string;
   expire_date: string;
   questions?: Question[];
 }

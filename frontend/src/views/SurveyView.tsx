@@ -22,12 +22,12 @@ const SurveyView: React.FC = () => {
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const payload = {...survey};
-        delete payload.image_url; // Just remove the URL if not needed
+        delete payload.image_url;
         axiosClient.post('/survey', payload).then((res) => {
             console.log(res);
         });
     };
-    
+
     const onImageChoose = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
