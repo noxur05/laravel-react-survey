@@ -3,10 +3,11 @@ import PageComponent from '../components/PageComponent';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import TButton from '../components/core/TButton';
 import axiosClient from '../axios';
+import { Survey } from '../modals/survey.modal';
 
 const SurveyView: React.FC = () => {
 
-    const [survey, setSurvey] = useState({
+    const [survey, setSurvey] = useState<Survey>({
         title: '',
         slug: '',
         status: false,
@@ -18,31 +19,30 @@ const SurveyView: React.FC = () => {
 
     })
 
-    const onSubmit = (e: any) => {
-        e.preventDefault()
-        axiosClient.post('/survey', {
-            title: 'LoremIpsum',
-            description: 'Lorem Ipsum',
-            // expire_date: '11/11/2028',
-            status: true,
-            questions: [],
-        })
-    }
-
-    const onImageChoose = (e: any) => {
-        const file = e.target.files[0];
-
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const payload = {...survey};
+        delete payload.image_url; // Just remove the URL if not needed
+        axiosClient.post('/survey', payload).then((res) => {
+            console.log(res);
+        });
+    };
+    
+    const onImageChoose = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+    
         const reader = new FileReader();
         reader.onload = () => {
             setSurvey({
                 ...survey,
-                image: file,
-                image_url: reader.result
-            })
-            e.target.value = ''
-        }
+                image: reader.result as string,
+                image_url: reader.result as string
+            });
+            if (e.target) e.target.value = '';
+        };
         reader.readAsDataURL(file);
-    }
+    };
     return (
         <PageComponent title='Create New Survey' buttons={
             <></>
