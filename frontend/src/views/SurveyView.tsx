@@ -12,7 +12,7 @@ const SurveyView: React.FC = () => {
         status: false,
         description: '',
         image: null,
-        image_url: null,
+        image_url: '',
         expire_date: '',
         questions: [],
 
@@ -29,8 +29,19 @@ const SurveyView: React.FC = () => {
         })
     }
 
-    const onImageChoose = () => {
+    const onImageChoose = (e: any) => {
+        const file = e.target.files[0];
 
+        const reader = new FileReader();
+        reader.onload = () => {
+            setSurvey({
+                ...survey,
+                image: file,
+                image_url: reader.result
+            })
+            e.target.value = ''
+        }
+        reader.readAsDataURL(file);
     }
     return (
         <PageComponent title='Create New Survey' buttons={
