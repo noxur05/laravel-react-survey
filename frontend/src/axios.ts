@@ -1,4 +1,4 @@
-import axios, { InternalAxiosRequestConfig, AxiosError } from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 import router from './router';
 
 const axiosClient = axios.create({
@@ -15,9 +15,10 @@ axiosClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 axiosClient.interceptors.response.use(response => {
     return response;
-}, (error: AxiosError) => {
+}, error => {
     if (error.response?.status === 401) {
-        router.navigate('/login');
+        localStorage.removeItem('TOKEN')
+        window.location.reload()
         return error;
     }
     throw error;
