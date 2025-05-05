@@ -4,8 +4,11 @@ import { PhotoIcon } from '@heroicons/react/24/outline';
 import TButton from '../components/core/TButton';
 import axiosClient from '../axios';
 import { Survey } from '../modals/survey.modal';
+import { useNavigate } from 'react-router-dom';
 
 const SurveyView: React.FC = () => {
+
+    const navigate = useNavigate()
 
     const [survey, setSurvey] = useState<Survey>({
         title: '',
@@ -18,13 +21,18 @@ const SurveyView: React.FC = () => {
         questions: [],
 
     })
+    const [error, setError] = useState('')
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const payload = {...survey};
         delete payload.image_url;
-        axiosClient.post('/survey', payload).then((res) => {
-            console.log(res);
+        axiosClient.post('/survey', payload).then(function(){
+            navigate('/surveys')
+        }).catch((error) => {
+            if (error && error.response) {
+                setError(error.response.data.message);
+            }
         });
     };
 
@@ -50,7 +58,9 @@ const SurveyView: React.FC = () => {
             <form action='#' method='POST' onSubmit={onSubmit}>
                 <div className="shadow sm:overflow-hidden sm:rounded-md">
                     <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
-
+                        {error && <div className="bg-red-500 text-white py-3 px-3 rounded-lg">
+                            {error}
+                        </div>}
                         <div className="">
                             <label className='block text-sm font-medium text-gray-700'>
                                 Photo
