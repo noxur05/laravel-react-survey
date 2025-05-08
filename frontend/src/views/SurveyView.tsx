@@ -5,6 +5,7 @@ import TButton from '../components/core/TButton';
 import axiosClient from '../axios';
 import { Survey } from '../modals/survey.modal';
 import { useNavigate } from 'react-router-dom';
+import SurveyQuestions from '../components/SurveyQuestions';
 
 const SurveyView: React.FC = () => {
 
@@ -165,17 +166,18 @@ const SurveyView: React.FC = () => {
                             />
                             </div>
                             <div className="ml-3 text-sm">
-                            <label
-                                htmlFor="comments"
-                                className="font-medium text-gray-700"
-                            >
-                                Active
-                            </label>
-                            <p className="text-gray-500">
-                                Whether to make survey publicly available
-                            </p>
+                                <label
+                                    htmlFor="comments"
+                                    className="font-medium text-gray-700"
+                                >
+                                    Active
+                                </label>
+                                <p className="text-gray-500">
+                                    Whether to make survey publicly available
+                                </p>
                             </div>
                         </div>
+                        <SurveyQuestions/>
                     </div>
                     <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                         <TButton>Save</TButton> 
