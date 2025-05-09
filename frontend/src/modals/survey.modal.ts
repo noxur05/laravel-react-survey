@@ -17,7 +17,7 @@ export interface Question {
   data?: QuestionData;
 }
 
-export type QuestionType = 'text' | 'radio' | 'checkbox' | 'select' | 'textarea';
+export type QuestionType = 'text' | 'radio' | 'checkbox' | 'select' | 'textarea' | string;
 
 export interface Survey {
   id?: number;
