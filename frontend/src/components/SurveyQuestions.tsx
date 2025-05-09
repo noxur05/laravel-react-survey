@@ -1,17 +1,8 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import {v4 as uuidv4} from "uuid"
-interface Question {
-  id: string;
-  type: string;
-  question: string;
-  description: string;
-  data: Record<string, undefined>;
-}
-
-interface Survey {
-  questions: Question[];
-}
+import { Question, Survey } from "../modals/survey.modal";
+import QuestionEditor from "./QuestionEditor";
 
 interface SurveyQuestionsProps {
   survey: Survey;
@@ -19,13 +10,13 @@ interface SurveyQuestionsProps {
 }
 
 export default function SurveyQuestions({ survey, onSurveyUpdate }: SurveyQuestionsProps) {
-    const [model, setModel] = useState<Survey>({...survey});
+    const [model, setModel] = useState<Survey>({...survey, questions: survey.questions || []});
 
     const addQuestion = () => {
         setModel({
             ...model,
             questions: [
-                ...model.questions,
+                ...model.questions ?? [],
                 {
                     id: uuidv4(),
                     type: 'text',
@@ -40,7 +31,7 @@ export default function SurveyQuestions({ survey, onSurveyUpdate }: SurveyQuesti
     const questionChange = (question: Question) => {
         if (!question) return;
 
-        const newQuestions = model.questions.map((q) => {
+        const newQuestions = model.questions?.map((q) => {
             if (q.id == question.id) {
                 return {...question};
             }
@@ -54,7 +45,7 @@ export default function SurveyQuestions({ survey, onSurveyUpdate }: SurveyQuesti
 
 
     const deleteQuestion = (question: Question) => {
-        const newQuestions = model.questions.filter(q => q.id !== question.id);
+        const newQuestions = model.questions?.filter(q => q.id !== question.id);
         setModel({
             ...model,
             questions: newQuestions
@@ -78,7 +69,7 @@ export default function SurveyQuestions({ survey, onSurveyUpdate }: SurveyQuesti
                     Add question
                 </button>
             </div>
-            {model.questions.length ? (
+            {model.questions?.length ? (
                 model.questions.map((q, index) => (
                     <QuestionEditor
                         key={q.id}

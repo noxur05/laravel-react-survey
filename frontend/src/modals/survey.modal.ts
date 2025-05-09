@@ -8,16 +8,18 @@ export interface QuestionData {
 }
 
 export interface Question {
-  id: number;
-  type: string;
+  id: number | string;
+  type: QuestionType;
   question: string;
-  description: string | null;
-  data?: QuestionData | undefined[];
+  description?: string | null;
+  data?: QuestionData;
 }
+
+type QuestionType = 'text' | 'radio' | 'checkbox' | 'select';
 
 export interface Survey {
   id?: number;
-  image: string | File | null;
+  image?: string | File | null;
   image_url?: string;
   title: string;
   slug: string;

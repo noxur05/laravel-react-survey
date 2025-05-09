@@ -197,7 +197,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) =>
   const [currentUser, setCurrentUser] = useState<IUser>({});
   const [userToken, _setUserToken] = useState<string | null>(localStorage.getItem('TOKEN') || '');
 
-  const [surveys, setSurveys] = useState<Survey[]>(tmpSurveys);
+  const [surveys, setSurveys] = useState<Survey[]>(tmpSurveys as Survey[]);
 
   const setUserToken = (token: any) => {
     if (token) {
