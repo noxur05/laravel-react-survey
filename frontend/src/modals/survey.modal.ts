@@ -1,3 +1,5 @@
+import { IUser } from '../modals/user.modal';
+
 export interface Option {
   uuid: string;
   text: string;
@@ -15,7 +17,7 @@ export interface Question {
   data?: QuestionData;
 }
 
-type QuestionType = 'text' | 'radio' | 'checkbox' | 'select';
+export type QuestionType = 'text' | 'radio' | 'checkbox' | 'select' | 'textarea';
 
 export interface Survey {
   id?: number;
@@ -35,4 +37,15 @@ export interface SurveyListItemProps {
     survey: Survey;
     key: number | string;
     onDeleteClick: () => void;
+}
+
+export interface StateContextType {
+  currentUser: IUser;
+  setCurrentUser: React.Dispatch<React.SetStateAction<IUser>>;
+  userToken: string | null;
+  setUserToken: React.Dispatch<React.SetStateAction<string | null>>;
+  surveys: Survey[];
+  setSurveys: React.Dispatch<React.SetStateAction<Survey[]>>;
+  questionTypes: QuestionType[];
+  setQuestionTypes: React.Dispatch<React.SetStateAction<QuestionType[]>>;
 }

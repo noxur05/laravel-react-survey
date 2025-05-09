@@ -1,16 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
+import { QuestionType, StateContextType, Survey } from '../modals/survey.modal';
 import { IUser } from '../modals/user.modal';
-import { Survey } from '../modals/survey.modal';
-
-
-interface StateContextType {
-  currentUser: IUser;
-  setCurrentUser: React.Dispatch<React.SetStateAction<IUser>>;
-  userToken: string | null;
-  setUserToken: React.Dispatch<React.SetStateAction<string | null>>;
-  surveys: Survey[];
-  setSurveys: React.Dispatch<React.SetStateAction<Survey[]>>;
-}
 
 const StateContext = createContext<StateContextType>({
   currentUser: {},
@@ -19,6 +9,8 @@ const StateContext = createContext<StateContextType>({
   setUserToken: () => {},
   surveys: [],
   setSurveys: () => {},
+  questionTypes: [],
+  setQuestionTypes: () => {},
 });
 
 interface ContextProviderProps {
@@ -199,6 +191,14 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) =>
 
   const [surveys, setSurveys] = useState<Survey[]>(tmpSurveys as Survey[]);
 
+  const [questionTypes, setQuestionTypes] = useState<QuestionType[]>([
+    'text',
+    'radio',
+    'checkbox',
+    'select',
+    'textarea'
+  ]);
+
   const setUserToken = (token: any) => {
     if (token) {
       localStorage.setItem('TOKEN', token)
@@ -216,6 +216,8 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) =>
         setUserToken,
         surveys,
         setSurveys,
+        questionTypes,
+        setQuestionTypes
       }}
     >
       {children}
