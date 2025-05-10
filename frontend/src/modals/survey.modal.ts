@@ -19,8 +19,8 @@ export interface Question {
 
 export type QuestionType = 'text' | 'radio' | 'checkbox' | 'select' | 'textarea' | string;
 
-export interface Survey {
-  id?: number;
+
+export interface SurveyForm {
   image?: string | File | null;
   image_url?: string;
   title: string;
@@ -31,6 +31,10 @@ export interface Survey {
   updated_at?: string;
   expire_date: string;
   questions?: Question[];
+}
+
+export interface Survey extends SurveyForm {
+  id?: number;
 }
 
 export interface SurveyListItemProps {

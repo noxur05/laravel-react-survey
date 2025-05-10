@@ -25,8 +25,8 @@ export default function Surveys() {
             )
            }>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-                {surveys.map((survey: Survey) => (
-                    <SurveyListItem survey={survey} key={survey.id} onDeleteClick={onDeleteClick}/>
+                {surveys.map((survey: Survey, index: number) => (
+                    <SurveyListItem survey={survey} key={index} onDeleteClick={onDeleteClick}/>
                 ))}
             </div>
            </PageComponent>
