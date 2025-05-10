@@ -12,18 +12,19 @@ interface SurveyQuestionsProps {
 export default function SurveyQuestions({ survey, onSurveyUpdate }: SurveyQuestionsProps) {
     const [model, setModel] = useState<Survey>({...survey, questions: survey.questions || []});
 
-    const addQuestion = () => {
+    const addQuestion = (index?: number) => {
+        index = index || model.questions?.length || 0;
+        model.questions?.splice(index, 0, {
+            id: uuidv4(),
+            type: 'text',
+            question: '',
+            description: '',
+            data: {}
+        })
         setModel({
             ...model,
             questions: [
                 ...model.questions ?? [],
-                {
-                    id: uuidv4(),
-                    type: 'text',
-                    question: '',
-                    description: '',
-                    data: {}
-                }
             ]
         })
     }
