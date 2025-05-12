@@ -36,8 +36,8 @@ const SurveyView: React.FC = () => {
             }
         });
     };
-    function onSurveyUpdate(survey: Survey) {
-        setSurvey({...survey});
+    function onSurveyUpdate(surveyQuestion: Survey) {
+        setSurvey({...survey, questions: surveyQuestion.questions});
     }
     const onImageChoose = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -182,7 +182,7 @@ const SurveyView: React.FC = () => {
                         <SurveyQuestions survey={survey} onSurveyUpdate={onSurveyUpdate}/>
                     </div>
                     <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                        <TButton>Save</TButton> 
+                        <TButton>Save</TButton>
                     </div>
                 </div>
             </form>

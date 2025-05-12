@@ -11,7 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState({__html: ''})
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setError({__html: ''})
 

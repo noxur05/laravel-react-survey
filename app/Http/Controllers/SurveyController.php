@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\QuestionTypeEnum;
 use App\Http\Requests\StoreSurveyRequest;
 use App\Http\Requests\UpdateSurveyRequest;
 use App\Http\Resources\SurveyResource;
