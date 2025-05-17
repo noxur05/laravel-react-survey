@@ -17,7 +17,7 @@ function classNames(...classes: Array<string>) {
 }
 
 export default function DefaultLayout() {
-  const {currentUser, userToken, setCurrentUser, setUserToken} = useStateContext();
+  const { currentUser, userToken, setCurrentUser, setUserToken } = useStateContext();
 
   if (!userToken) {
     return <Navigate to="/login" />
@@ -26,28 +26,28 @@ export default function DefaultLayout() {
   const logout = (e: React.MouseEvent) => {
     e.preventDefault()
     axiosClient.post('/logout')
-    .then(function() {
-      setCurrentUser({})
-      setUserToken(null)
-    })
+      .then(function () {
+        setCurrentUser({})
+        setUserToken(null)
+      })
   }
 
   useEffect(() => {
     axiosClient.get('/me')
-    .then(({ data }) => {
-      console.log(data)
-      setCurrentUser(data)
+      .then(({ data }) => {
+        console.log(data)
+        setCurrentUser(data)
 
-    })
-    .catch(() => {
-      setUserToken(null)
-      setCurrentUser({})
-    })
+      })
+      .catch(() => {
+        setUserToken(null)
+        setCurrentUser({})
+      })
   }, [])
 
   return (
     <>
-      <div className="min-h-full">  
+      <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
@@ -66,7 +66,7 @@ export default function DefaultLayout() {
                         key={item.name}
                         to={item.to}
                         className={({ isActive }) => classNames(
-                            isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium',
                         )}
                       >
@@ -92,15 +92,15 @@ export default function DefaultLayout() {
                       transition
                       className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                     >
-                        <MenuItem key={userNavigation.name}>
-                          <a
-                            href={userNavigation.href}
-                            onClick={(e) => logout(e)}
-                            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-                          >
-                            {userNavigation.name}
-                          </a>
-                        </MenuItem>
+                      <MenuItem key={userNavigation.name}>
+                        <a
+                          href={userNavigation.href}
+                          onClick={(e) => logout(e)}
+                          className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                        >
+                          {userNavigation.name}
+                        </a>
+                      </MenuItem>
                     </MenuItems>
                   </Menu>
                 </div>
@@ -134,26 +134,26 @@ export default function DefaultLayout() {
             </div>
             <div className="border-t border-gray-700 pt-4 pb-3">
               <div className="flex items-center px-5">
-              <UserIcon className="w-8 h-8  rounded-full text-white bg-black p-2" />
+                <UserIcon className="w-8 h-8  rounded-full text-white bg-black p-2" />
                 <div className="ml-3">
                   <div className="text-base/5 font-medium text-white">{currentUser.name}</div>
                   <div className="text-sm font-medium text-gray-400">{currentUser.email}</div>
                 </div>
               </div>
               <div className="mt-3 space-y-1 px-2">
-                  <a
-                    key={userNavigation.name}
-                    href={userNavigation.href}
-                    onClick={(e) => logout(e)}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                  >
-                    {userNavigation.name}
-                  </a>
+                <a
+                  key={userNavigation.name}
+                  href={userNavigation.href}
+                  onClick={(e) => logout(e)}
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                >
+                  {userNavigation.name}
+                </a>
               </div>
             </div>
           </DisclosurePanel>
         </Disclosure>
-        <Outlet/>
+        <Outlet />
       </div>
     </>
   )

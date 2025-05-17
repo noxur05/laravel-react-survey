@@ -4,13 +4,13 @@ import { IUser } from '../modals/user.modal';
 
 const StateContext = createContext<StateContextType>({
   currentUser: {},
-  setCurrentUser: () => {},
+  setCurrentUser: () => { },
   userToken: null,
-  setUserToken: () => {},
+  setUserToken: () => { },
   surveys: [],
-  setSurveys: () => {},
+  setSurveys: () => { },
   questionTypes: [],
-  setQuestionTypes: () => {},
+  setQuestionTypes: () => { },
 });
 
 interface ContextProviderProps {

@@ -9,7 +9,7 @@ import { ContextProvider } from './contexts/ContextProvider.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ContextProvider>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </ContextProvider>
   </StrictMode>,
 )

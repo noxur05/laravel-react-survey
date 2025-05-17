@@ -38,9 +38,9 @@ export interface Survey extends SurveyForm {
 }
 
 export interface SurveyListItemProps {
-    survey: Survey;
-    key: number | string;
-    onDeleteClick: () => void;
+  survey: Survey;
+  key: number | string;
+  onDeleteClick: () => void;
 }
 
 export interface StateContextType {
