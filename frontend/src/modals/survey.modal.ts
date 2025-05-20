@@ -29,7 +29,7 @@ export interface SurveyForm {
   description: string;
   created_at?: string;
   updated_at?: string;
-  expire_date: string;
+  expire_date?: string;
   questions?: Question[];
 }
 
