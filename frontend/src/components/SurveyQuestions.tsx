@@ -1,62 +1,54 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid"
-import { Question, Survey } from "../modals/survey.modal";
+import { Question } from "../modals/survey.modal";
 import QuestionEditor from "./QuestionEditor";
 
 interface SurveyQuestionsProps {
-  survey: Survey;
-  onSurveyUpdate: (updatedSurvey: Survey) => void;
+  questions: Question[];
+  onQuestionsUpdate: (updatedQuestion: Question[]) => void;
 }
 
-export default function SurveyQuestions({ survey, onSurveyUpdate }: SurveyQuestionsProps) {
-  const [model, setModel] = useState<Survey>({ ...survey, questions: survey.questions || [] });
+export default function SurveyQuestions({ questions, onQuestionsUpdate }: SurveyQuestionsProps) {
+  const [myQuestions, setMyQuestions] = useState<Question[]>([...questions]);
 
   const addQuestion = (index?: number) => {
-    index = index || model.questions?.length || 0;
-    model.questions?.splice(index, 0, {
+    index = index || myQuestions.length || 0;
+    myQuestions.splice(index, 0, {
       id: uuidv4(),
       type: 'text',
       question: '',
       description: '',
       data: {}
     })
-    setModel({
-      ...model,
-      questions: [
-        ...model.questions ?? [],
-      ]
-    })
+    setMyQuestions([...myQuestions]);
+    onQuestionsUpdate(myQuestions);
   }
 
   const questionChange = (question: Question) => {
     if (!question) return;
 
-    const newQuestions = model.questions?.map((q) => {
+    const newQuestions = myQuestions?.map((q) => {
       if (q.id == question.id) {
         return { ...question };
       }
       return q;
     });
-    setModel({
-      ...model,
-      questions: newQuestions
-    });
+    setMyQuestions(newQuestions);
+    onQuestionsUpdate(newQuestions);
   }
 
 
   const deleteQuestion = (question: Question) => {
-    const newQuestions = model.questions?.filter(q => q.id !== question.id);
-    setModel({
-      ...model,
-      questions: newQuestions
-    });
+    const newQuestions = myQuestions?.filter(q => q.id !== question.id);
+    setMyQuestions(newQuestions);
+    onQuestionsUpdate(newQuestions);
   }
 
 
   useEffect(() => {
-    onSurveyUpdate(model);
-  }, [model])
+    setMyQuestions(questions);
+  }, [questions])
   return (
     <>
       <div className="flex justify-between">
@@ -70,8 +62,8 @@ export default function SurveyQuestions({ survey, onSurveyUpdate }: SurveyQuesti
           Add question
         </button>
       </div>
-      {model.questions?.length ? (
-        model.questions.map((q, index) => (
+      {myQuestions?.length ? (
+        myQuestions.map((q, index) => (
           <QuestionEditor
             key={q.id}
             index={index}

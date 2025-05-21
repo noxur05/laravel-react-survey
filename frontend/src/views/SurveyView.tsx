@@ -1,9 +1,9 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageComponent from '../components/PageComponent';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import TButton from '../components/core/TButton';
 import axiosClient from '../axios';
-import { Survey } from '../modals/survey.modal';
+import { Question, Survey } from '../modals/survey.modal';
 import { useNavigate, useParams } from 'react-router-dom';
 import SurveyQuestions from '../components/SurveyQuestions';
 
@@ -37,9 +37,14 @@ const SurveyView: React.FC = () => {
       }
     });
   };
-  function onSurveyUpdate(surveyQuestion: Survey) {
-    setSurvey({ ...survey, questions: surveyQuestion.questions });
+
+  function onQuestionsUpdate(questions: Question[]) {
+    setSurvey({
+      ...survey,
+      questions,
+    });
   }
+
   const onImageChoose = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -60,7 +65,9 @@ const SurveyView: React.FC = () => {
     if (id) {
       axiosClient.get(`/survey/${id}`)
         .then(({ data }) => {
-          setSurvey(data.data);
+          console.log(data.data.questions);
+          setSurvey({...data.data,
+             questions: Array.isArray(data.data.questions) ? data.data.questions : []});
         })
     }
   }, [])
@@ -189,7 +196,7 @@ const SurveyView: React.FC = () => {
                 </p>
               </div>
             </div>
-            <SurveyQuestions survey={survey} onSurveyUpdate={onSurveyUpdate} />
+            <SurveyQuestions questions={survey.questions} onQuestionsUpdate={onQuestionsUpdate} />
           </div>
           <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
             <TButton>Save</TButton>

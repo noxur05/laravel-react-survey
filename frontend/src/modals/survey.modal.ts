@@ -30,7 +30,7 @@ export interface SurveyForm {
   created_at?: string;
   updated_at?: string;
   expire_date?: string;
-  questions?: Question[];
+  questions: Question[];
 }
 
 export interface Survey extends SurveyForm {
