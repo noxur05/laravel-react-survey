@@ -1,11 +1,17 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
-import { IMeta } from "../modals/modal";
+// import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
+import { IMeta, ILink } from "../modals/modal";
 
 interface IMetaProps {
+  onPageClick: (link: ILink) => void;
   meta?: IMeta;
 }
+const PaginationLinks: React.FC<IMetaProps> = ({meta, onPageClick}) => {
 
-const PaginationLinks: React.FC<IMetaProps> = ({meta}) => {
+  const onClick = (e: React.FormEvent, link: ILink) => {
+    e.preventDefault();
+    if (link.url === null) return;
+    onPageClick(link);
+  }
   return (
     <>
       <div className="flex items-center justify-between border-gray-200 bg-white px-4 py-3 sm:px-6 shadow-md mt-4">
@@ -40,6 +46,8 @@ const PaginationLinks: React.FC<IMetaProps> = ({meta}) => {
                       `relative inline-flex items-center px-4 py-2 text-sm focus:z-20 font-semibold ${link?.active ? 'z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'ring-gray-300 ring-inset hover:bg-gray-50 focus:outline-offset-0'} text-gray-900 ring-1` + (index === 0 ? ' rounded-l-md' : '') + (index === meta.links.length - 1 ? ' rounded-r-md' : '')
                     }
                     dangerouslySetInnerHTML={{ __html: link.label }}
+                    onClick={e => onClick(e, link)}
+                    key={index}
                   >
                   </a>
                 )

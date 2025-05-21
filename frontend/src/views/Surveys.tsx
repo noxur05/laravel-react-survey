@@ -6,7 +6,7 @@ import { Survey } from "../modals/survey.modal";
 import { useEffect, useState } from "react";
 import axiosClient from "../axios";
 import PaginationLinks from "../components/PaginationLinks";
-import { IMeta } from "../modals/modal";
+import { ILink, IMeta } from "../modals/modal";
 
 export default function Surveys() {
   const [surveys, setSurveys] = useState<Survey[]>([])
@@ -17,19 +17,28 @@ export default function Surveys() {
     console.log('On Click');
   }
 
-  useEffect(() => {
+  const getSurveys = (url: string | null) => {
+    console.log(url)
     setLoading(true);
-    axiosClient.get('/survey').then(({ data }) => {
+    url = url || '/survey';
+    axiosClient.get(url).then(({ data }) => {
       setLoading(false);
       setSurveys(data.data)
       setMeta(data.meta);
-      console.log(data.meta);
     }
     ).catch((error) => {
       console.log(error);
-    }
-    )
+    })
+  }
+
+
+  useEffect(() => {
+    getSurveys(null);
   }, [])
+
+  const onPageClick = (link: ILink) => {
+    getSurveys(link.url);
+  }
   return (
     <>
       <PageComponent title="Surveys" buttons={
@@ -52,7 +61,7 @@ export default function Surveys() {
                 <SurveyListItem survey={survey} key={index} onDeleteClick={onDeleteClick} />
               ))}
             </div>
-            <PaginationLinks meta={meta}/>
+            <PaginationLinks meta={meta} onPageClick={onPageClick}/>
           </div>
         )}
       </PageComponent>
