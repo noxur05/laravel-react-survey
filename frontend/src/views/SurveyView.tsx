@@ -24,14 +24,22 @@ const SurveyView: React.FC = () => {
 
   })
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const payload = { ...survey };
     delete payload.image_url;
-    axiosClient.post('/survey', payload).then(function () {
+    let res = null;
+    if (id) {
+      res = axiosClient.put(`/survey/${id}`, payload);
+    } else {
+      res = axiosClient.post('/survey', payload);
+    }
+    res.then(function () {
       navigate('/surveys')
-    }).catch((error) => {
+    }
+    ).catch((error) => {
       if (error && error.response) {
         setError(error.response.data.message);
       }
@@ -63,19 +71,20 @@ const SurveyView: React.FC = () => {
 
   useEffect(() => {
     if (id) {
+      setLoading(true);
       axiosClient.get(`/survey/${id}`)
         .then(({ data }) => {
-          console.log(data.data.questions);
+          setLoading(false);
           setSurvey({...data.data,
              questions: Array.isArray(data.data.questions) ? data.data.questions : []});
         })
     }
   }, [])
   return (
-    <PageComponent title='Create New Survey' buttons={
+    <PageComponent title={!id ? 'Create New Survey' : 'Update Survey'} buttons={
       <></>
     }>
-      <form action='#' method='POST' onSubmit={onSubmit}>
+      {!loading && <form action='#' method='POST' onSubmit={onSubmit}>
         <div className="shadow sm:overflow-hidden sm:rounded-md">
           <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
             {error && <div className="bg-red-500 text-white py-3 px-3 rounded-lg">
@@ -202,7 +211,7 @@ const SurveyView: React.FC = () => {
             <TButton>Save</TButton>
           </div>
         </div>
-      </form>
+      </form>}
     </PageComponent>
   );
 };
