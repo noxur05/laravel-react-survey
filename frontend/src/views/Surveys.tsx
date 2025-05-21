@@ -18,7 +18,6 @@ export default function Surveys() {
   }
 
   const getSurveys = (url: string | null) => {
-    console.log(url)
     setLoading(true);
     url = url || '/survey';
     axiosClient.get(url).then(({ data }) => {
@@ -61,7 +60,7 @@ export default function Surveys() {
                 <SurveyListItem survey={survey} key={index} onDeleteClick={onDeleteClick} />
               ))}
             </div>
-            <PaginationLinks meta={meta} onPageClick={onPageClick}/>
+            <PaginationLinks meta={meta!} onPageClick={onPageClick}/>
           </div>
         )}
       </PageComponent>

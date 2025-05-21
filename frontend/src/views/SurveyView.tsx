@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import PageComponent from '../components/PageComponent';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import TButton from '../components/core/TButton';
 import axiosClient from '../axios';
 import { Survey } from '../modals/survey.modal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SurveyQuestions from '../components/SurveyQuestions';
 
 const SurveyView: React.FC = () => {
 
   const navigate = useNavigate()
+  const { id } = useParams();
 
   const [survey, setSurvey] = useState<Survey>({
     title: '',
@@ -54,6 +55,15 @@ const SurveyView: React.FC = () => {
     };
     reader.readAsDataURL(file);
   };
+
+  useEffect(() => {
+    if (id) {
+      axiosClient.get(`/survey/${id}`)
+        .then(({ data }) => {
+          setSurvey(data.data);
+        })
+    }
+  }, [])
   return (
     <PageComponent title='Create New Survey' buttons={
       <></>

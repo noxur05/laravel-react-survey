@@ -3,7 +3,7 @@ import { IMeta, ILink } from "../modals/modal";
 
 interface IMetaProps {
   onPageClick: (link: ILink) => void;
-  meta?: IMeta;
+  meta: IMeta;
 }
 const PaginationLinks: React.FC<IMetaProps> = ({meta, onPageClick}) => {
 
@@ -17,12 +17,14 @@ const PaginationLinks: React.FC<IMetaProps> = ({meta, onPageClick}) => {
       <div className="flex items-center justify-between border-gray-200 bg-white px-4 py-3 sm:px-6 shadow-md mt-4">
         <div className="flex flex-1 justify-between sm:hidden">
           <a
+            onClick={e => onClick(e, meta.links[0])}
             href="#"
             className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             Previous
           </a>
           <a
+            onClick={e => onClick(e, meta.links[meta.links.length - 1])}
             href="#"
             className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >

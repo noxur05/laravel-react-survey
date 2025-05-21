@@ -25,7 +25,6 @@ export default function SignUp() {
     }).then(({ data }) => {
       setCurrentUser(data.user);
       setUserToken(data.token);
-      console.log("Data is: ", data)
     }).catch((error) => {
       if (axios.isAxiosError(error)) {
         if (error.response) {
@@ -35,7 +34,6 @@ export default function SignUp() {
                 ...accum,
                 ...next
               ], []);
-            console.log(finalErrors);
             setError({ __html: finalErrors.join('<br>') });
           } else {
             setError({ __html: error.response.data?.errors });
@@ -48,7 +46,6 @@ export default function SignUp() {
       } else {
         setError({ __html: 'Manty is delicious meal' });
       }
-      console.log("Errors: ", error);
     })
   }
   return (

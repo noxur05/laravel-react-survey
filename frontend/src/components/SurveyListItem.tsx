@@ -16,7 +16,7 @@ const SurveyListItem: React.FC<SurveyListItemProps> = ({ survey, key, onDeleteCl
           dangerouslySetInnerHTML={{ __html: survey.description }}
         ></div>
         <div className="flex justify-between items-center mt-3">
-          <TButton to={`surveys/${survey.id}`}>
+          <TButton to={`/surveys/${survey.id}`}>
             <PencilIcon className='w-5 h-5 mr-2' /> Edit
           </TButton>
           <div className="flex items-center">

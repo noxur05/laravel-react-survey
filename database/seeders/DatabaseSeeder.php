@@ -2,15 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Survey;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
 
@@ -19,5 +16,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'km@gmail.com',
             'password' => bcrypt('Admin123.')
         ]);
+
+
+        Survey::factory(1000)->create();
     }
 }

@@ -21,7 +21,6 @@ export default function Login() {
     }).then(({ data }) => {
       setCurrentUser(data.user);
       setUserToken(data.token);
-      console.log("Data is: ", data)
     }).catch((error) => {
       if (axios.isAxiosError(error)) {
         if (error.response) {
@@ -43,7 +42,6 @@ export default function Login() {
       } else {
         setError({ __html: 'Manty is delicious meal' });
       }
-      console.log("Errors: ", error);
     })
   }
   return (
